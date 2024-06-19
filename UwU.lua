@@ -157,6 +157,7 @@ end
 -- bighand
 local CDhandsndiscards = 1
 local CDhandsize = 7
+local CDante_scaling = 1.5
 
 -- functions for decks
 
@@ -280,7 +281,7 @@ local decks = {
         name = "Big Hands",
         slug = "bighand",
         config = {
-            ante_scaling = 1.5,
+            ante_scaling = CDante_scaling,
             discards = CDhandsndiscards,
             hands = CDhandsndiscards,
             hand_size = CDhandsize,
@@ -295,7 +296,7 @@ local decks = {
                 "+" .. CDhandsndiscards .. " {C:blue}hands{}, {C:red}discards{}",
                 "+" .. CDhandsize .. " {C:attention}hand size{}.",
                 " ",
-                "Ante scales {C:attention}X1.5{} as fast"
+                "Ante scales {C:attention}X".. CDante_scaling .."{} as fast"
             }
         }
     },
