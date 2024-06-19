@@ -158,10 +158,6 @@ end
 local CDhandsndiscards = 1
 local CDhandsize = 7
 
-
--- InfiniteJoker
-local IJantescaling = 1
-
 -- functions for decks
 
 -- Initialize deck effect
@@ -174,9 +170,6 @@ function Back.apply_to_run(arg_56_0)
             func = function()
                 -- Set joker slots to 2
                 G.jokers.config.card_limit = 2
-
-                -- set joker count to 0
-                IJantescaling = 1
 
                 -- Add effect to starting params
                 G.GAME.starting_params.CEP_infinitejoker = true
@@ -191,9 +184,6 @@ function Back.apply_to_run(arg_56_0)
             func = function()
                 -- Set joker slots to 2
                 G.jokers.config.card_limit = 2
-
-                -- set joker count to 0
-                IJantescaling = 1
 
                 -- Add effect to starting params
                 G.GAME.starting_params.CEP_hinfinitejoker = true
@@ -220,14 +210,19 @@ end
 -- scaling functions
 
 function IJnewantescaling() 
-    if #G.jokers.cards > 5 then -- log scale when jokers > 5
+    if #G.jokers.cards > 5 then -- log scaling when jokers > 5
 
         IJantescaling = math.log(#G.jokers.cards,2) - math.log(5,2) + 1
 
-        if #G.jokers.cards > 50 then -- log scale when jokers > 50 (brutal)
+        if #G.jokers.cards > 50 then -- log scaling when jokers > 50 (brutal)
 
             IJantescaling = IJantescaling * ( math.log(#G.jokers.cards - 49 , 2))
 
+        end
+        if G.GAME.round_resets.ante > 3 and #G.jokers.cards >= G.GAME.round_resets.ante * 3  then --log scaling when ante > 3 and joker >= ante*3
+
+            IJantescaling = IJantescaling * ( math.log(G.GAME.round_resets.ante - 1,2))
+            
         end
     else 
 
@@ -237,14 +232,19 @@ function IJnewantescaling()
 end
 
 function HIJnewantescaling()
-    if #G.jokers.cards > 5 then -- sqrt scale when jokers > 5
+    if #G.jokers.cards > 5 then -- sqrt scaling when jokers > 5
 
         IJantescaling = math.sqrt(#G.jokers.cards) - math.sqrt(5) + 1
 
-        if #G.jokers.cards > 50 then -- sqrt scale when jokers > 50 (brutal)
+        if #G.jokers.cards > 50 then -- sqrt scaling when jokers > 50 (brutal)
 
             IJantescaling = IJantescaling * ( math.sqrt(#G.jokers.cards - 50 ))
 
+        end
+        if G.GAME.round_resets.ante > 3 and #G.jokers.cards >= G.GAME.round_resets.ante * 3  then --sqrt scaling when ante > 3 and joker >= ante*3
+
+            IJantescaling = IJantescaling * ( math.sqrt(G.GAME.round_resets.ante - 2))
+            
         end
     else
 
