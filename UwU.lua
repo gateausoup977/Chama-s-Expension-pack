@@ -351,7 +351,7 @@ local decks = {
 function SMODS.INIT.CEP()
 
     -- Initialize Decks
-    for deck in decks do
+    for u,deck in pairs(decks) do
         init_deck(deck)
     end
 end
